@@ -3,8 +3,9 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import * as React from "react";
+import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,9 +13,23 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ThemeToggle() {
-  const { theme = "system", setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Skeleton
+        className={buttonVariants({ variant: "outline", size: "icon" })}
+      />
+    );
+  }
 
   return (
     <DropdownMenu>
