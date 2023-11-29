@@ -30,12 +30,12 @@ export function CommentBoard(props: CommentBoardProps) {
   const { comments } = props;
 
   const pathname = usePathname();
-  const user = useUser();
+  const { isLoaded, isSignedIn } = useUser();
 
   const formRef = useRef<HTMLFormElement>(null);
   const { pending } = useFormStatus();
 
-  const formDisabled = !user.isLoaded || !user.isSignedIn;
+  const formDisabled = !isLoaded || !isSignedIn;
 
   return (
     <div className="space-y-4 pt-6">

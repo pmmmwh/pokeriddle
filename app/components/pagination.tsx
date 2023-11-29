@@ -87,7 +87,7 @@ export function Pagination(props: PaginationProps) {
   return (
     <section className="fixed bottom-16 left-0 right-0 m-auto flex w-[590px] justify-center space-x-6 rounded-md border bg-white/30 p-4 drop-shadow-sm backdrop-blur dark:bg-black/30 lg:space-x-8">
       <div className="flex items-center space-x-2">
-        <p className="text-sm font-medium">Rows per page</p>
+        <p className="text-sm font-medium">Items per page</p>
         <Select
           value={`${limit}`}
           onValueChange={(value) => {

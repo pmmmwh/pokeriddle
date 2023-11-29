@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs";
 import { revalidateTag } from "next/cache";
 
 import { insertComment } from "@/lib/drizzle";
+import { typedBoolean } from "@/lib/utils";
 
 export async function insert(formData: FormData) {
   const user = await currentUser();
@@ -21,11 +22,14 @@ export async function insert(formData: FormData) {
     throw new Error("Comment is invalid");
   }
 
+  const userNames = [user.firstName, user.lastName].filter(typedBoolean);
+  const userName = userNames.length ? userNames.join(" ") : "Unknown";
+
   await insertComment({
     content,
     pokemonName,
     userId: user.id,
-    userName: `${user.firstName} ${user.lastName}`,
+    userName,
   });
   revalidateTag("comments");
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { ChevronLeft } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -9,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import * as PokeAPI from "@/lib/pokeapi";
 
 import { ThemeToggle } from "./theme-toggle";
+import { UserNav } from "./user-nav";
 
 export function Topbar() {
   const router = useRouter();
@@ -38,12 +38,7 @@ export function Topbar() {
         <div className="ml-auto flex items-center space-x-4">
           <Search />
           <ThemeToggle />
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
+          <UserNav />
         </div>
       </div>
     </header>
