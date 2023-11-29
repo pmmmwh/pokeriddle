@@ -37,13 +37,14 @@ export default async function Details({ params }: PageProps) {
   ]);
 
   return (
-    <div>
-      <section className="flex h-[400px] items-center space-x-8 py-4 text-sm">
+    <div className="space-y-4">
+      <section className="flex flex-col items-center space-y-4 py-4 text-sm lg:h-[400px] lg:flex-row lg:space-x-8">
         <div className="flex flex-grow justify-center">
           <PokemonSprite pokemon={data} size={280} type="official" />
         </div>
-        <Separator orientation="vertical" />
-        <div className="flex h-full w-96 flex-col gap-4">
+        <Separator className="lg:hidden" />
+        <Separator className="hidden lg:block" orientation="vertical" />
+        <div className="flex h-full w-full flex-col gap-4 lg:w-80">
           <BasicInfo label="ID">#{data.id}</BasicInfo>
           <BasicInfo label="Types">
             {data.types.map((t) => (
@@ -64,8 +65,9 @@ export default async function Details({ params }: PageProps) {
             {(data.weight / 10).toFixed(1)}kg
           </BasicInfo>
         </div>
-        <Separator orientation="vertical" />
-        <div className="flex h-full w-72 flex-col gap-4">
+        <Separator className="lg:hidden" />
+        <Separator className="hidden lg:block" orientation="vertical" />
+        <div className="flex h-full w-full flex-col gap-4 lg:w-80">
           {data.stats.map((s) => (
             <BaseStat
               key={s.stat.name}
@@ -75,7 +77,7 @@ export default async function Details({ params }: PageProps) {
           ))}
         </div>
       </section>
-      <Separator className="my-4" />
+      <Separator />
       <section>
         <Collapsible className="w-full">
           <div className="flex items-center justify-between space-x-4">
@@ -92,7 +94,7 @@ export default async function Details({ params }: PageProps) {
           </CollapsibleContent>
         </Collapsible>
       </section>
-      <Separator className="my-4" />
+      <Separator />
       <section>
         <h2 className="text-lg font-semibold">Comments ({comments.length})</h2>
         <CommentBoard comments={comments} />
