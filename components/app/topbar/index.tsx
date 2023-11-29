@@ -8,12 +8,14 @@ import { Search } from "@/components/app/topbar/search";
 import { Button } from "@/components/ui/button";
 import * as PokeAPI from "@/lib/pokeapi";
 
+import { ThemeToggle } from "./theme-toggle";
+
 export function Topbar() {
   const router = useRouter();
   const pathname = usePathname();
 
   return (
-    <header className="fixed z-50 min-w-full border-b bg-white">
+    <header className="fixed z-50 min-w-full border-b bg-white dark:bg-black">
       <div className="flex h-16 items-center px-4">
         {pathname !== "/" && (
           <div className="mr-4">
@@ -35,6 +37,7 @@ export function Topbar() {
         </h1>
         <div className="ml-auto flex items-center space-x-4">
           <Search />
+          <ThemeToggle />
           <SignedIn>
             <UserButton />
           </SignedIn>
