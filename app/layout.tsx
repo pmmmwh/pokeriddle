@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata, ServerRuntime } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 
@@ -9,7 +9,6 @@ import { Topbar } from "@/components/app/topbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const runtime: ServerRuntime = "edge";
 export const metadata: Metadata = {
   title: "PokéRiddle",
 };
