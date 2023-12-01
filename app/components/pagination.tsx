@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
+import { getPaginationParams, PAGINATION_LIMITS } from "../utils";
+
 type PaginationButtonProps = {
   children: ReactNode;
   disabled?: boolean;
@@ -57,16 +59,15 @@ export function Pagination(props: PaginationProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentPage = parseInt(searchParams.get("page") ?? "1");
-  const limit = parseInt(searchParams.get("limit") ?? "30");
+  const { limit, page } = getPaginationParams(searchParams);
 
   useEffect(() => {
-    if (currentPage > totalPages) {
+    if (page > totalPages) {
       const params = new URLSearchParams(searchParams);
       params.set("page", totalPages.toString());
       router.replace(`${pathname}?${params.toString()}`);
     }
-  }, [currentPage, pathname, router, searchParams, totalPages]);
+  }, [page, pathname, router, searchParams, totalPages]);
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -98,21 +99,18 @@ export function Pagination(props: PaginationProps) {
             <SelectValue placeholder={limit} />
           </SelectTrigger>
           <SelectContent side="top">
-            {Array.from({ length: 5 }, (_, ix) => {
-              const pageSize = (ix + 1) * 10;
-              return (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              );
-            })}
+            {PAGINATION_LIMITS.map((size) => (
+              <SelectItem key={size} value={`${size}`}>
+                {size}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
       <div className="flex shrink-0 items-center justify-center text-sm font-medium">
         Page&ensp;
         <Select
-          value={`${currentPage}`}
+          value={`${page}`}
           onValueChange={(value) => {
             setPage(value);
           }}
@@ -122,10 +120,10 @@ export function Pagination(props: PaginationProps) {
           </SelectTrigger>
           <SelectContent side="top">
             {Array.from({ length: totalPages }, (_, ix) => {
-              const page = ix + 1;
+              const p = ix + 1;
               return (
-                <SelectItem key={page} value={`${page}`}>
-                  {page}
+                <SelectItem key={p} value={`${p}`}>
+                  {p}
                 </SelectItem>
               );
             })}
@@ -134,26 +132,23 @@ export function Pagination(props: PaginationProps) {
         &ensp;of {totalPages}
       </div>
       <div className="flex items-center space-x-2">
-        <PaginationButton disabled={currentPage === 1} href={createPageURL(1)}>
+        <PaginationButton disabled={page === 1} href={createPageURL(1)}>
           <span className="sr-only">Go to first page</span>
           <ChevronsLeftIcon className="h-4 w-4" />
         </PaginationButton>
-        <PaginationButton
-          disabled={currentPage === 1}
-          href={createPageURL(currentPage - 1)}
-        >
+        <PaginationButton disabled={page === 1} href={createPageURL(page - 1)}>
           <span className="sr-only">Go to previous page</span>
           <ChevronLeftIcon className="h-4 w-4" />
         </PaginationButton>
         <PaginationButton
-          disabled={currentPage === totalPages}
-          href={createPageURL(currentPage + 1)}
+          disabled={page === totalPages}
+          href={createPageURL(page + 1)}
         >
           <span className="sr-only">Go to next page</span>
           <ChevronRightIcon className="h-4 w-4" />
         </PaginationButton>
         <PaginationButton
-          disabled={currentPage === totalPages}
+          disabled={page === totalPages}
           href={createPageURL(totalPages)}
         >
           <span className="sr-only">Go to last page</span>

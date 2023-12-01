@@ -5,6 +5,7 @@ import * as PokeAPI from "@/lib/pokeapi";
 
 import { Pagination } from "./components/pagination";
 import { PokemonCard } from "./components/pokemon-card";
+import { getPaginationParams } from "./utils";
 
 type PageProps = {
   searchParams?: {
@@ -17,12 +18,10 @@ type PageProps = {
 export default async function Home(props: PageProps) {
   const { searchParams } = props;
 
-  const currentPage = parseInt(searchParams?.page ?? "1");
-
-  const limit = parseInt(searchParams?.limit ?? "30");
-  const offset = (currentPage - 1) * limit;
-
-  // const query = searchParams?.query || "";
+  const { limit, page } = getPaginationParams(
+    new URLSearchParams(searchParams),
+  );
+  const offset = (page - 1) * limit;
 
   const data = await PokeAPI.get("pokemon/", { limit, offset });
   const totalPages = Math.ceil(data.count / limit);
