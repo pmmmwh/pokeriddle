@@ -14,7 +14,7 @@
     "drizzle:migrate": "tsx scripts/migrate.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.3",
+    "@clerk/nextjs": "^4.31.5",
     "@clerk/themes": "^1.7.9",
     "@hookform/resolvers": "^3.3.3",
     "@neondatabase/serverless": "^0.6.0",
